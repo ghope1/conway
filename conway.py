@@ -1,5 +1,6 @@
 import pygame
 import random
+import copy
 SCREEN_HEIGHT = 100;
 SCREEN_WIDTH = 100;
 SCALE = 4;
@@ -8,6 +9,7 @@ FPS = 60;
 # pygame setup process
 pygame.init()
 screenDisplay = pygame.display.set_mode((SCREEN_WIDTH*SCALE, SCREEN_HEIGHT*SCALE))
+pygame.display.set_caption('conways game of life')
 clock = pygame.time.Clock()
 currRunning = True
 
@@ -21,7 +23,8 @@ class pixel:
 
 
 def updateBoard(currBoard):
-    nextBoard = [pix for pix in currBoard]
+    #nextBoard = [pix for pix in currBoard]
+    nextBoard = copy.deepcopy(currBoard)
     for i in range(len(currBoard)):
         currPixel = currBoard[i]
         currPixelX = i % SCREEN_WIDTH
@@ -29,7 +32,7 @@ def updateBoard(currBoard):
         currPixelStatus = pixelSt(currPixelX, currPixelY, currBoard)
         if currPixel.aliveStatus and currPixelStatus:
             nextBoard[i].age += 1
-        elif currPixel.aliveStatus and not currPixelStatus:
+        elif currPixel.aliveStatus and (not currPixelStatus):
             nextBoard[i].age == 0
         nextBoard[i].aliveStatus = currPixelStatus
 
@@ -51,11 +54,11 @@ def pixelSt(x, y, currBoard):
 
     if currPixel.aliveStatus and numNeighbors < 2:
         aliveNextFrame = False;
-    elif currPixel.aliveStatus and numNeighbors == 2 or numNeighbors == 3:
+    elif currPixel.aliveStatus and (numNeighbors == 2 or numNeighbors == 3):
         aliveNextFrame = True;
     elif currPixel.aliveStatus and numNeighbors > 3:
         aliveNextFrame = False;
-    elif not currPixel.aliveStatus and numNeighbors == 3:
+    elif (not currPixel.aliveStatus) and numNeighbors == 3:
         aliveNextFrame = True;
         
     return aliveNextFrame
