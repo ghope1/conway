@@ -5,7 +5,7 @@ import copy
 SCREEN_HEIGHT = 100 # game world height
 SCREEN_WIDTH = 100 # game world width
 SCALE = 4 # scale graphics of game world up by some amount
-UPDATES_PER_SEC = 3 # number of times to update game world per second
+UPDATES_PER_SEC = 30 # number of times to update game world per second
 FPS = 60 
 
 # pygame setup process
@@ -91,7 +91,7 @@ def ageToColor(age):
 
 
 # stores the current status of every pixel
-pixels = [pixel(random.randint(0,1), 0) for _ in range(SCREEN_WIDTH*SCREEN_HEIGHT)]
+pixels = [pixel(False, 0) for _ in range(SCREEN_WIDTH*SCREEN_HEIGHT)]
 
 paused = False
 
